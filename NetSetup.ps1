@@ -7,3 +7,4 @@ $PrefixLength = 16
 $DNS = 10.10.1.200
 
 # Set the network profile location to Private
+Set-NetConnectionProfile -NetworkCategory Private -InterfaceAlias Ethernet
