@@ -7,7 +7,7 @@ $PrefixLength -eq 16
 $DNS -eq 10.10.1.200
 $IFace -eq -InterfaceAlias Ethernet
 $Gui -eq Get-OptionWindowsFeature -Online | Where {$_.FeatureName -eq "Server-Gui-Shell"}
-$Suffix -eq "410Server2012"
+$Suffix -eq "410Server2012.local"
 $HyperV -eq Read-Host 'Will this server use Hyper-V?'
 
 # Set the network profile location to Private
@@ -42,3 +42,6 @@ else
 	# Then this MUST be the Client OS
 	New-NetIpAddress -AddressFamily IPv4 -PrefixLength $PrefixLength $IFace -DefaultGateway $DefaultGateway -IPAddress 10.10.1.10
 }
+
+# Join the computer to the appropriate workgroup
+Add-Computer -WorkgroupName "410Server2012"
