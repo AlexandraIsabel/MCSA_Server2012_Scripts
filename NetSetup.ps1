@@ -6,7 +6,7 @@ $DefaultGateway -eq 10.10.1.250
 $PrefixLength -eq 16
 $DNS -eq 10.10.1.200
 $IFace -eq "-InterfaceAlias Ethernet"
-$Gui = Get-OptionalWindowsFeature -Online | Where {$_.FeatureName -eq "Server-Gui-Shell"}
+$Gui = Get-WindowsOptionalFeature -Online | Where {$_.FeatureName -eq "Server-Gui-Shell"}
 $Suffix -eq "410Server2012.local"
 $HyperV = Read-Host 'Will this server use Hyper-V?'
 

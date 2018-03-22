@@ -1,6 +1,6 @@
 # Setup Variables
 $HyperV = Read-Host 'Will this server use Hyper-V?'
-$Gui = Get-OptionalWindowsFeature -Online | Where {$_.FeatureName -eq "Server-Gui-Shell"}
+$Gui = Get-WindowsOptionalFeature -Online | Where {$_.FeatureName -eq "Server-Gui-Shell"}
 $Edition = Get-WindowsEdition -Online
 $CoreName -eq "410ServerCore"
 $ClientName -eq "410Win8"
