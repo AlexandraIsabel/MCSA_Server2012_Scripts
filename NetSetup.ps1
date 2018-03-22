@@ -1,14 +1,14 @@
 # A script to setup the Networking settings of newly installed VMs
 
 # Variable Setup
-$Edition -eq Get-WindowsEdition -Online
+$Edition = Get-WindowsEdition -Online
 $DefaultGateway -eq 10.10.1.250
 $PrefixLength -eq 16
 $DNS -eq 10.10.1.200
-$IFace -eq -InterfaceAlias Ethernet
-$Gui -eq Get-OptionWindowsFeature -Online | Where {$_.FeatureName -eq "Server-Gui-Shell"}
+$IFace -eq "-InterfaceAlias Ethernet"
+$Gui = Get-OptionWindowsFeature -Online | Where {$_.FeatureName -eq "Server-Gui-Shell"}
 $Suffix -eq "410Server2012.local"
-$HyperV -eq Read-Host 'Will this server use Hyper-V?'
+$HyperV = Read-Host 'Will this server use Hyper-V?'
 
 # Set the network profile location to Private
 Set-NetConnectionProfile -NetworkCategory Private $IFace
