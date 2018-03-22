@@ -2,19 +2,19 @@
 
 # Variable Setup
 $Edition = Get-WindowsEdition -Online
-$DefaultGateway -eq 10.10.1.250
-$PrefixLength -eq 16
-$DNS -eq 10.10.1.200
-$IFace -eq "-InterfaceAlias Ethernet"
+$DefaultGateway = "10.10.1.250"
+$PrefixLength = 16
+$DNS = 10.10.1.200
+$IFace = "Ethernet"
 $Gui = Get-WindowsOptionalFeature -Online | Where {$_.FeatureName -eq "Server-Gui-Shell"}
-$Suffix -eq "410Server2012.local"
-$HyperV = Read-Host 'Will this server use Hyper-V?'
+$Suffix = "410Server2012.local"
+$HyperV = Read-Host 'Will this system use Hyper-V?'
 
 # Set the network profile location to Private
-Set-NetConnectionProfile -NetworkCategory Private $IFace
+Set-NetConnectionProfile -NetworkCategory Private -InterfaceAlias $IFace
 
 # Set DNS Suffix
-Set-DnsClient $IFace -ConnectionSpecificSuffix $Suffix
+Set-DnsClient -InterfaceAlias $IFace -ConnectionSpecificSuffix $Suffix
 
 # Set Network Setting based on the Edition returned by Get-WindowsEdition and Option Features installed
 if($Edition -eq "Edition : ServerStandardEval")
@@ -25,22 +25,22 @@ if($Edition -eq "Edition : ServerStandardEval")
 			# Check if this is 410Server2
 			if ($HyperV -like "n")
 			{
-				New-NetIPAddress -AddressFamily IPv4 -PrefixLength $PrefixLength $IFace -DefaultGateway $DefaultGateway -IPAddress 10.10.1.1
+				New-NetIPAddress -AddressFamily IPv4 -PrefixLength $PrefixLength -InterfaceAlias $IFace -DefaultGateway $DefaultGateway -IPAddress 10.10.1.1
 			}
 			else
 			{
-				New-NetIpAddress -AddressFamily IPv4 -PrefixLength $PrefixLength $IFace -DefaultGateway $DefaultGateway -IPAddress 10.10.1.2
+				New-NetIpAddress -AddressFamily IPv4 -PrefixLength $PrefixLength -InterfaceAlias $IFace -DefaultGateway $DefaultGateway -IPAddress 10.10.1.2
 			}
 		}
 		else
 		{
-			New-NetIpAddress -AddressFamily IPv4 -PrefixLength $PrefixLength $IFace -DefaultGateway $DefaultGateway -IPAddress 10.10.1.5
+			New-NetIpAddress -AddressFamily IPv4 -PrefixLength $PrefixLength -InterfaceAlias $IFace -DefaultGateway $DefaultGateway -IPAddress 10.10.1.5
 		}
 	}
 else
 {
 	# Then this MUST be the Client OS
-	New-NetIpAddress -AddressFamily IPv4 -PrefixLength $PrefixLength $IFace -DefaultGateway $DefaultGateway -IPAddress 10.10.1.10
+	New-NetIpAddress -AddressFamily IPv4 -PrefixLength $PrefixLength -InterfaceAlias $IFace -DefaultGateway $DefaultGateway -IPAddress 10.10.1.10
 }
 
 # Join the computer to the appropriate workgroup
