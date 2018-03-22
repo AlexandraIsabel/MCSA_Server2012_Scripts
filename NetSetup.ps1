@@ -45,3 +45,6 @@ else
 
 # Join the computer to the appropriate workgroup
 Add-Computer -WorkgroupName "410Server2012"
+
+#Restart Computer after completion
+Restart-Computer
