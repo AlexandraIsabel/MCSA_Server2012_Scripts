@@ -22,29 +22,32 @@ if($Edition -eq "Edition : ServerStandardEval")
 		# Check if the server isn't running Core
 		if($Gui.State -eq "Enabled")
 		{
-			# Check if this is 410Server2
+			# Check which non-core server this is
 			if ($HyperV -like "n")
 			{
+				# It is 410Server1
 				New-NetIPAddress -AddressFamily IPv4 -PrefixLength $PrefixLength -InterfaceAlias $IFace -DefaultGateway $DefaultGateway -IPAddress 10.10.1.1
 			}
 			else
 			{
+				# It is 410Server2
 				New-NetIpAddress -AddressFamily IPv4 -PrefixLength $PrefixLength -InterfaceAlias $IFace -DefaultGateway $DefaultGateway -IPAddress 10.10.1.2
 			}
 		}
 		else
 		{
+			# It is 410ServerCore
 			New-NetIpAddress -AddressFamily IPv4 -PrefixLength $PrefixLength -InterfaceAlias $IFace -DefaultGateway $DefaultGateway -IPAddress 10.10.1.5
 		}
 	}
 else
 {
-	# Then this MUST be the Client OS
+	# Then this MUST be 410Win8
 	New-NetIpAddress -AddressFamily IPv4 -PrefixLength $PrefixLength -InterfaceAlias $IFace -DefaultGateway $DefaultGateway -IPAddress 10.10.1.10
 }
 
 # Join the computer to the appropriate workgroup
 Add-Computer -WorkgroupName "410Server2012"
 
-#Restart Computer after completion
+# Restart Computer after completion
 Restart-Computer
